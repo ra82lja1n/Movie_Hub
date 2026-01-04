@@ -9,6 +9,7 @@ function Movies() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
 
+
   const fetchMovies = async (p = 1) => {
     try {
       setLoading(false);
@@ -20,7 +21,7 @@ function Movies() {
   };
 
   useEffect(() => {
-    fetchMovies();
+    fetchMovies(page);
   }, [page]);
 
   const filteredMovies = movies.filter((movie) => {
@@ -52,37 +53,36 @@ function Movies() {
 
       {/* Filters */}
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-6 mb-10 flex flex-col sm:flex-row gap-4 items-center">
-  <input
-    type="text"
-    placeholder="🔍 Search movie..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-    className="w-full sm:flex-1 px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-  />
+        <input
+          type="text"
+          placeholder="🔍 Search movie..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full sm:flex-1 px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        />
 
-  <select
-    value={minRating}
-    onChange={(e) => setMinRating(e.target.value)}
-    className="w-full sm:w-40 px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition"
-  >
-    <option value="0">All Ratings</option>
-    <option value="5">⭐ 5+</option>
-    <option value="6">⭐ 6+</option>
-    <option value="7">⭐ 7+</option>
-    <option value="8">⭐ 8+</option>
-  </select>
+        <select
+          value={minRating}
+          onChange={(e) => setMinRating(e.target.value)}
+          className="w-full sm:w-40 px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition"
+        >
+          <option value="0">All Ratings</option>
+          <option value="5">⭐ 5+</option>
+          <option value="6">⭐ 6+</option>
+          <option value="7">⭐ 7+</option>
+          <option value="8">⭐ 8+</option>
+        </select>
 
-  <button
-    onClick={() => {
-      setSearch("");
-      setMinRating(0);
-    }}
-    className="w-full sm:w-auto px-6 py-3 font-semibold rounded-xl border border-amber-400 text-amber-600 hover:bg-amber-400 hover:text-black transition"
-  >
-    Clear Filters
-  </button>
-</div>
-
+        <button
+          onClick={() => {
+            setSearch("");
+            setMinRating(0);
+          }}
+          className="w-full sm:w-auto px-6 py-3 font-semibold rounded-xl border border-amber-400 text-amber-600 hover:bg-amber-400 hover:text-black transition"
+        >
+          Clear Filters
+        </button>
+      </div>
 
       {/* Movies Grid */}
       {filteredMovies.length === 0 ? (
@@ -98,6 +98,33 @@ function Movies() {
           ))}
         </div>
       )}
+
+      {/* Pagination */}
+
+      <div className=" flex justify-center items-center gap-4 mt-8">
+        <button
+          className={`px-4 py-2 rounded ${
+            page <= 1
+              ? "bg-gray-300 cursor-not-allowed "
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
+
+          onClick={()=>setPage(page -1)}
+        >
+          Previous
+        </button>
+        <span>Page {page}</span>
+        <button
+        className={`px-4 py-2 rounded ${
+            page >= 500
+              ? "bg-gray-300 cursor-not-allowed "
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          }`}
+
+          onClick={()=>setPage(page + 1)}
+
+        >Next</button>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { getTrendingMovies } from "../services/apiService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 
 function Home() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTrendingMovies()
@@ -28,7 +31,7 @@ function Home() {
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-8">
       {/* Hero Section */}
-      <div className="max-w-6xl mx-auto bg-gradient-to-r from-gray-900 to-gray-800 text-white p-10 rounded-2xl shadow-2xl">
+      <div className="max-w-6xl mx-auto bg-linear-to-r from-gray-950 to-gray-800 text-white p-10 rounded-2xl shadow-2xl">
         <h1 className="text-4xl font-extrabold tracking-wide">
           🎬 𝕄oviꫀ ℍub
         </h1>
@@ -54,6 +57,7 @@ function Home() {
           <div
             key={movie.id}
             className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-300"
+            onClick={()=>navigate(`/movie-details/${movie.id}`)}
           >
             <img
               src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}

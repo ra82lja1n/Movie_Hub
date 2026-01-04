@@ -22,7 +22,7 @@ export const getMovieDetails = async (id) => {
     const response = await Axios.get(
       `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`
     );
-    return response;
+    return response.data;
   } catch (error) {
     console.log("Error in Fetching Movie Details", error);
   }
@@ -39,3 +39,5 @@ export const getTrendingMovies = async () => {
     console.log("Error in Fetching Trending Movies", error);
   }
 };
+
+
